@@ -4,5 +4,11 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/desafio</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">PoiLkjmnb25@</property>
+
+        <mapping class="com.desafio.tecnico.entity.Cidade" />
+        <mapping class="com.desafio.tecnico.entity.Estado"/>
+        <mapping class="com.desafio.tecnico.entity.CEP"/>
+        <mapping class="com.desafio.tecnico.entity.Endereco" />
+        <mapping class="com.desafio.tecnico.entity.Propietario" />
     </session-factory>
 </hibernate-configuration>
