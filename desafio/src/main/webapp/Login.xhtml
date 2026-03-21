@@ -23,8 +23,8 @@
                 <h:outputLabel value="CPF: " for="cpf" p:class="form-label" />
                 <h:inputText id="cpf" p:placeholder="XXX.XXX.XXX-XX" p:class="form-input" value="#{propietarioBean.propietario.cpf}" />
 
-                <h:commandButton value="Voltar" p:class="form-button back-button" action="Register.xhtml" />
-                <h:commandButton value="Entrar" p:class="form-button" actionListener="#{propietarioBean.entrar}"
+                <h:commandButton value="Voltar" p:class="form-button back-button" action="Register.xhtml?faces-redirect=true" />
+                <h:commandButton value="Entrar" p:class="form-button" actionListener="#{propietarioBean.entrar}" action="#{propietarioBean.entrar}"/>
             </h:panelGrid>
         </fieldset>
     </h:form>
