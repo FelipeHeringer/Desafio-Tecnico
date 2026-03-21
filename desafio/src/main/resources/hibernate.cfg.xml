@@ -10,5 +10,6 @@
         <mapping class="com.desafio.tecnico.entity.CEP"/>
         <mapping class="com.desafio.tecnico.entity.Endereco" />
         <mapping class="com.desafio.tecnico.entity.Propietario" />
+        <mapping class="com.desafio.tecnico.entity.Casa" />
     </session-factory>
 </hibernate-configuration>
