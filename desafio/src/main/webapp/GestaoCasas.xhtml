@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/jsf/html https://jakarta.ee/xml/ns/jakartaee/jsf-html.xsd">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Casas</title>
+
+    <!-- PrimeFaces Theme -->
+    <h:outputStylesheet library="primefaces" name="themes/saga/theme.css" />
+
+    <link rel="stylesheet" href="#{request.contextPath}/css/Header.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/css/Casas.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap"
+        rel="stylesheet" />
+</h:head>
+
+<h:body>
+    <main class="main-content">
+
+        <p:growl id="growl" showDetail="true" />
+
+        <header class="page-header">
+            <div class="header-left">
+                <h1 class="page-title">Gestão de Casas</h1>
+                <p class="page-subtitle">Gerencie todos os seus imóveis</p>
+            </div>
+            <div class="header-right">
+                <div class="owner-badge">
+                    <div class="owner-avatar">
+                        #{propietarioBean.propietario.nome.substring(0,1).toUpperCase()}
+                    </div>
+                    <div class="owner-info">
+                        <span class="owner-name">#{propietarioBean.propietario.nome}</span>
+                        <span class="owner-cpf">CPF: #{propietarioBean.propietario.cpf}</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <h:form id="tabelaCasas">
+
+            <p:panel styleClass="table-panel">
+                <f:facet name="header">
+                    <div class="table-header">
+                        <span class="panel-header-title">📋 Lista de Casas</span>
+                        <p:inputText id="filtroGlobal" onkeyup="PF('dtCasas').filter()" placeholder="🔍 Pesquisar..."
+                            styleClass="search-input" />
+                    </div>
+                </f:facet>
+
+                <p:dataTable id="dtCasas" var="casa" value="#{gestaoCasasBean.casas}" widgetVar="dtCasas"
+                    paginator="true" rows="8" rowsPerPageTemplate="5,8,15,25"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    globalFilter="#{filtroGlobal}" emptyMessage="Nenhuma casa cadastrada." styleClass="custom-datatable"
+                    rowStyleClass="#{casa.ativo ? '' : 'row-inativa'}">
+
+                    <p:column headerText="ID" sortBy="#{casa.id}" styleClass="col-id">
+                        <h:outputText value="#{casa.id}" />
+                    </p:column>
+
+                    <p:column headerText="Tipo" sortBy="#{casa.tipo}" filterBy="#{casa.tipo}">
+                        <span class="tipo-badge">#{casa.tipo}</span>
+                    </p:column>
+
+                    <p:column headerText="Descrição" sortBy="#{casa.descricao}">
+                        <h:outputText value="#{casa.descricao}" />
+                    </p:column>
+
+                    <p:column headerText="Área (m²)" sortBy="#{casa.area}" styleClass="col-area">
+                        <h:outputText value="#{casa.area}">
+                            <f:convertNumber maxFractionDigits="2" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Endereço">
+                        <h:outputText
+                            value="#{casa.endereco.logradouro}, #{casa.endereco.numero} - #{casa.endereco.bairro}, #{casa.endereco.cidade.nomeCidade}/#{casa.endereco.estado.nomeEstado}" />
+                    </p:column>
+
+                    <p:column headerText="Cadastro" sortBy="#{casa.dataCadastro}">
+                        <h:outputText value="#{casa.dataCadastroFormatada}" />
+                    </p:column>
+
+                    <p:column headerText="Status" sortBy="#{casa.ativo}" styleClass="col-status">
+                        <span class="status-badge #{casa.ativo ? 'status-ativo' : 'status-inativo'}">
+                            #{casa.ativo ? 'Ativo' : 'Inativo'}
+                        </span>
+                    </p:column>
+
+                    <p:column headerText="Ações" styleClass="col-acoes">
+                        <p:commandButton icon="pi pi-pencil" styleClass="btn-icon btn-edit" title="Editar"
+                            action="#{gestaoCasasBean.prepararEdicao(casa)}" process="@this" />
+                        <p:commandButton icon="pi pi-trash" styleClass="btn-icon btn-delete" title="Excluir"
+                            actionListener="#{gestaoCasasBean.excluir(casa)}" update="tabelaCasas :growl"
+                            process="@this">
+                            <p:confirm header="Confirmação" message="Deseja realmente excluir esta casa?"
+                                icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <div class="container-btn">
+                    <p:commandButton value="Nova Casa" icon="pi pi-save" styleClass="btn-primary"
+                        action="#{gestaoCasasBean.novaCasa}" />
+                </div>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="confirm-dialog">
+                    <p:commandButton value="Sim" type="button" styleClass="btn-primary ui-confirmdialog-yes" />
+                    <p:commandButton value="Não" type="button" styleClass="btn-secondary ui-confirmdialog-no" />
+                </p:confirmDialog>
+
+            </p:panel>
+        </h:form>
+
+    </main>
+
+</h:body>
+
+</html>

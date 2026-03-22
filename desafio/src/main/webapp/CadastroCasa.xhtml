@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/jsf/html https://jakarta.ee/xml/ns/jakartaee/jsf-html.xsd">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão Casas Cadastro</title>
+
+    <link rel="stylesheet" href="#{request.contextPath}/css/Header.css" />
+    <link rel="stylesheet" href="#{request.contextPath}/css/Form.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap"
+        rel="stylesheet" />
+</h:head>
+<h:body>
+
+    <main class="main-content">
+        <p:growl id="growl" showDetail="true" />
+
+        <header class="page-header">
+            <div class="header-left">
+                <h1 class="page-title">Gestão de Casas</h1>
+                <p class="page-subtitle">Cadastre um novo imóvel</p>
+            </div>
+            <div class="header-right">
+                <div class="owner-badge">
+                    <div class="owner-avatar">
+                        #{propietarioBean.propietario.nome.substring(0,1).toUpperCase()}
+                    </div>
+                    <div class="owner-info">
+                        <span class="owner-name">#{propietarioBean.propietario.nome}</span>
+                        <span class="owner-cpf">CPF: #{propietarioBean.propietario.cpf}</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <h:form id="formCasa">
+            <p:panel styleClass="form-panel">
+                <f:facet name="header">
+                    <span class="panel-header-title">
+                        ➕ Nova Casa
+                    </span>
+                </f:facet>
+
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label class="field-label">Tipo</label>
+                        <p:selectOneMenu id="tipo" value="#{cadastroCasaBean.casa.tipo}" styleClass="field-input">
+                            <f:selectItem itemLabel="Selecione..." itemValue="" />
+                            <f:selectItem itemLabel="Casa" itemValue="Casa" />
+                            <f:selectItem itemLabel="Apartamento" itemValue="Apartamento" />
+                            <f:selectItem itemLabel="Kitnet" itemValue="Kitnet" />
+                            <f:selectItem itemLabel="Sobrado" itemValue="Sobrado" />
+                            <f:selectItem itemLabel="Terreno" itemValue="Terreno" />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Área (m²)</label>
+                        <p:inputText id="area" value="#{cadastroCasaBean.casa.area}" styleClass="field-input"
+                            placeholder="Ex: 120.50" />
+                    </div>
+
+                    <div class="field-group field-group--full">
+                        <label class="field-label">Descrição</label>
+                        <p:inputTextarea id="descricao" value="#{cadastroCasaBean.casa.descricao}"
+                            styleClass="field-input field-textarea" placeholder="Descreva o imóvel..." rows="2" />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">CEP</label>
+                        <p:inputText id="cep" value="#{cadastroCasaBean.casa.endereco.cep}" styleClass="field-input"
+                            placeholder="XXXXX-XXX" />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Logradouro</label>
+                        <p:inputText id="logradouro" value="#{cadastroCasaBean.casa.endereco.logradouro}"
+                            styleClass="field-input" />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Número</label>
+                        <p:inputText id="numero" value="#{cadastroCasaBean.casa.endereco.numero}"
+                            styleClass="field-input" pt:type="number" />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Bairro</label>
+                        <p:inputText id="bairro" value="#{cadastroCasaBean.casa.endereco.bairro}"
+                            styleClass="field-input" />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Cidade</label>
+                        <p:inputText id="cidade" value="#{cadastroCasaBean.casa.endereco.cidade}"
+                            styleClass="field-input" />
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label">Estado</label>
+                        <p:inputText id="estado" value="#{cadastroCasaBean.casa.endereco.estado}"
+                            styleClass="field-input" />
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <p:commandButton value="Voltar" icon="pi pi-save" styleClass="btn-secondary"
+                        action="#{cadastroCasaBean.voltar}" />
+                    <p:commandButton value="Salvar" icon="pi pi-save" styleClass="btn-primary"
+                        action="#{cadastroCasaBean.salvar}" process="@form" />
+                </div>
+            </p:panel>
+        </h:form>
+    </main>
+</h:body>
+
+</html>
