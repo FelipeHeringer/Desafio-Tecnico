@@ -28,15 +28,24 @@ public class EnderecoService {
     private CEPRepository cepRepository = new CEPRepositoryImpl();
 
     public Endereco salvar(EnderecoDTO enderecoDTO) {
-
-        Endereco endereco = toEntity(enderecoDTO);
-        enderecoRepository.save(endereco);
-
-        return endereco;
+        return encontrarOuCriaEndereco(enderecoDTO);
     }
 
     public Endereco atualizar(Endereco endereco) {
         return enderecoRepository.update(endereco);
+    }
+
+    private Endereco encontrarOuCriaEndereco(EnderecoDTO enderecoDTO) {
+        Endereco endereco = toEntity(enderecoDTO);
+
+        Endereco existente = enderecoRepository.findByAllFields(
+                endereco.getCep().getId(), endereco.getEstado().getId(),
+                endereco.getCidade().getId(),endereco.getBairro(), endereco.getLogradouro(),
+                endereco.getNumero(), endereco.getComplemento());
+
+        if (existente != null) return existente;
+
+        return enderecoRepository.save(endereco);
     }
 
     private Endereco toEntity(EnderecoDTO enderecoDTO) {

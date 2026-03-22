@@ -17,7 +17,7 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
     }
 
     @Override
-    public void save(Endereco endereco) {
+    public Endereco save(Endereco endereco) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -25,6 +25,8 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
             transaction = session.beginTransaction();
             session.persist(endereco);
             transaction.commit();
+
+            return endereco;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
@@ -59,5 +61,38 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
                 session.close();
         }
     }
+
+@Override
+public Endereco findByAllFields(Long cepId, Long estadoId, Long cidadeId,
+                                 String bairro, String logradouro,
+                                 Integer numero, String complemento) {
+    try (Session session = sessionFactory.openSession()) {
+        String hql = "SELECT e FROM Endereco e " +
+                     "JOIN FETCH e.cep " +
+                     "JOIN FETCH e.estado " +
+                     "JOIN FETCH e.cidade " +
+                     "WHERE e.cep.id = :cepId " +
+                     "AND e.estado.id = :estadoId " +
+                     "AND e.cidade.id = :cidadeId " +
+                     "AND e.bairro = :bairro " +
+                     "AND e.logradouro = :logradouro " +
+                     "AND e.numero = :numero " +
+                     "AND (:complemento IS NULL AND e.complemento IS NULL " +
+                     "     OR e.complemento = :complemento)";
+
+        return session.createQuery(hql, Endereco.class)
+                .setParameter("cepId", cepId)
+                .setParameter("estadoId", estadoId)
+                .setParameter("cidadeId", cidadeId)
+                .setParameter("bairro", bairro)
+                .setParameter("logradouro", logradouro)
+                .setParameter("numero", numero)
+                .setParameter("complemento", complemento)
+                .setMaxResults(1)
+                .uniqueResult();
+    } catch (Exception e) {
+        throw new RuntimeException("Erro ao buscar endereço por campos", e);
+    }
+}
 
 }
