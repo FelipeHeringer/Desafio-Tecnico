@@ -122,6 +122,7 @@ public class CasaRepositoryImpl implements CasaRepository {
                             "JOIN FETCH e.cidade " +
                             "JOIN FETCH e.estado " +
                             "JOIN FETCH e.cep " +
+                            "JOIN FETCH c.propietario " +
                             "WHERE c.id = :idCasa",
                     Casa.class)
                     .setParameter("idCasa", idCasa)
