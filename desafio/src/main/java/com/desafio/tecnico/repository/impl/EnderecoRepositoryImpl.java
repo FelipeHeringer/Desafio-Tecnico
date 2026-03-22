@@ -37,4 +37,27 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
         }
     }
 
+    @Override
+    public Endereco update(Endereco endereco) {
+        Transaction transaction = null;
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+
+            Endereco updated = session.merge(endereco);
+            session.flush();
+            transaction.commit();
+
+            return updated;
+        } catch (Exception e) {
+            if (transaction != null)
+                transaction.rollback();
+            throw new RuntimeException("Erro ao atualizar Endereco ID: " + endereco.getId(), e);
+        } finally {
+            if (session != null && session.isOpen())
+                session.close();
+        }
+    }
+
 }

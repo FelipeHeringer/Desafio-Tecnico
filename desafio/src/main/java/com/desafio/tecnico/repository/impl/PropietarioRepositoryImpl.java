@@ -40,8 +40,14 @@ public class PropietarioRepositoryImpl implements PropietarioRepository {
     @Override
     public Propietario findByCpf(String cpf) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery(
-                    "FROM Propietario WHERE cpf = :cpf", Propietario.class)
+          return session.createQuery(
+                    "SELECT p FROM Propietario p " +
+                    "JOIN FETCH p.endereco e " +
+                    "JOIN FETCH e.cidade " +
+                    "JOIN FETCH e.estado " +
+                    "JOIN FETCH e.cep " +
+                    "WHERE p.cpf = :cpf " +
+                    "AND p.ativo = true", Propietario.class)
                     .setParameter("cpf", cpf)
                     .uniqueResult();
         } catch (Exception e) {

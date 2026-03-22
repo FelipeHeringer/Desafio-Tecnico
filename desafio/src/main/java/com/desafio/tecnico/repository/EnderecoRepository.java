@@ -5,4 +5,5 @@ import com.desafio.tecnico.entity.Endereco;
 public interface EnderecoRepository {
     
     void save(Endereco endereco);
+    Endereco update(Endereco endereco);
 }
