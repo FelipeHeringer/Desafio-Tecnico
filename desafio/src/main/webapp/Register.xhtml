@@ -57,7 +57,7 @@
                     value="#{propietarioBean.propietario.endereco.complemento}" />
 
                 <h:outputLabel />
-                <h:commandButton value="Salvar" p:class="form-button" actionListener="#{propietarioBean.salvar}" action="#{propietarioBean.salvar}"/>
+                <h:commandButton value="Salvar" p:class="form-button" action="#{propietarioBean.salvar}" process="@this"/>
             </h:panelGrid>
             <hr />
             <p style="text-align: start; margin-top: 20px;">

@@ -25,9 +25,10 @@ public class PropietarioBean implements Serializable {
         
     }
 
-    public void salvar() {
+    public String salvar() {
         propietarioService.salvar(propietario);
 
+        return "GestaoCasas.xhtml?faces-redirect=true";
     }
 
     public String entrar() {
