@@ -32,7 +32,8 @@ public class EdicaoCasaBean implements Serializable {
 
     public String atualizar() {
         try {
-            casaService.atualizar(idCasa, casa, propietarioBean.getPropietario().getCpf());
+            String cleanCpf = propietarioBean.getPropietario().getCpf().replaceAll("[^0-9]", "");
+            casaService.atualizar(idCasa, casa, cleanCpf);
             return "GestaoCasas.xhtml?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();

@@ -9,9 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestão de Casas</title>
 
-    <!-- PrimeFaces Theme -->
-    <h:outputStylesheet library="primefaces" name="themes/saga/theme.css" />
-
     <link rel="stylesheet" href="#{request.contextPath}/css/Header.css" />
     <link rel="stylesheet" href="#{request.contextPath}/css/Casas.css" />
     <link
@@ -48,15 +45,13 @@
                 <f:facet name="header">
                     <div class="table-header">
                         <span class="panel-header-title">📋 Lista de Casas</span>
-                        <p:inputText id="filtroGlobal" onkeyup="PF('dtCasas').filter()" placeholder="🔍 Pesquisar..."
-                            styleClass="search-input" />
                     </div>
                 </f:facet>
 
                 <p:dataTable id="dtCasas" var="casa" value="#{gestaoCasasBean.casas}" widgetVar="dtCasas"
                     paginator="true" rows="8" rowsPerPageTemplate="5,8,15,25"
                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    globalFilter="#{filtroGlobal}" emptyMessage="Nenhuma casa cadastrada." styleClass="custom-datatable"
+                    emptyMessage="Nenhuma casa cadastrada." styleClass="custom-datatable"
                     rowStyleClass="#{casa.ativo ? '' : 'row-inativa'}">
 
                     <p:column headerText="ID" sortBy="#{casa.id}" styleClass="col-id">
@@ -67,7 +62,7 @@
                         <span class="tipo-badge">#{casa.tipo}</span>
                     </p:column>
 
-                    <p:column headerText="Descrição" sortBy="#{casa.descricao}">
+                    <p:column headerText="Descrição" sortBy="#{casa.descricao}" filterBy="#{casa.descricao}">
                         <h:outputText value="#{casa.descricao}" />
                     </p:column>
 

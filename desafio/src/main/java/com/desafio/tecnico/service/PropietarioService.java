@@ -30,15 +30,19 @@ public class PropietarioService {
     }
 
     public Propietario entrar(PropietarioDTO propietarioDTO) {
-        return propietarioRepository.findByCpf(propietarioDTO.getCpf());
+        String cleanCpf = propietarioDTO.getCpf().replaceAll("[^0-9]", "");
+        return propietarioRepository.findByCpf(cleanCpf);
     }
 
     private Propietario toEntity(PropietarioDTO propietario) {
+        String cleanCpf = propietario.getCpf().replaceAll("[^0-9]", "");
+        String cleanTelefone = propietario.getTelefone().replaceAll("[^0-9]", "");
+
         Propietario entity = new Propietario();
         entity.setNome(propietario.getNome());
-        entity.setCpf(propietario.getCpf());
+        entity.setCpf(cleanCpf);
         entity.setEmail(propietario.getEmail());
-        entity.setTelefone(propietario.getTelefone());
+        entity.setTelefone(cleanTelefone);
 
         // Mapear o endereço do DTO para a entidade
         Endereco endereco = enderecoService.salvar(propietario.getEndereco());

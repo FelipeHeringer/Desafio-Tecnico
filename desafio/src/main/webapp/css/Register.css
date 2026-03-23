@@ -54,3 +54,11 @@ legend {
 .form-button:hover {
     background-color: #45a049;
 }
+
+.field-error {
+    color: #dc2626;
+    font-size: 0.75rem;
+    display: block;
+    margin-top: -8px;
+    margin-bottom: 6px;
+}

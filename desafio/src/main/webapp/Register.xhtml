@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/jsf/html https://jakarta.ee/xml/ns/jakartaee/jsf-html.xsd">
@@ -7,61 +7,120 @@
 <h:head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestão Casas</title>
+    <title>Gestão Casas — Cadastro</title>
     <link rel="stylesheet" href="#{request.contextPath}/css/Register.css" />
 </h:head>
 
 <h:body>
-    <h:form>
+    <h:form id="formRegister">
         <fieldset>
             <legend>Cadastre-se</legend>
 
             <h:panelGrid columns="2">
-                <h:outputLabel value="Nome: " for="nome" p:class="form-label" />
-                <h:inputText id="nome" p:class="form-input" value="#{propietarioBean.propietario.nome}" />
 
-                <h:outputLabel value="CPF: " for="cpf" p:class="form-label" />
-                <h:inputText id="cpf" p:placeholder="XXX.XXX.XXX-XX" p:class="form-input"
-                    value="#{propietarioBean.propietario.cpf}" />
+                <h:outputLabel value="Nome: *" for="nome" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="nome" p:class="form-input" value="#{propietarioBean.propietario.nome}"
+                        required="true" requiredMessage="Nome é obrigatório."
+                        validatorMessage="Nome deve ter entre 2 e 100 caracteres.">
+                        <f:validateLength minimum="2" maximum="100" />
+                    </h:inputText>
+                    <h:message for="nome" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Email: " for="email" p:class="form-label" />
-                <h:inputText id="email" p:class="form-input" value="#{propietarioBean.propietario.email}" />
+                <h:outputLabel value="CPF: *" for="cpf" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="cpf" p:placeholder="XXX.XXX.XXX-XX" p:class="form-input"
+                        value="#{propietarioBean.propietario.cpf}" required="true" requiredMessage="CPF é obrigatório."
+                        validatorMessage="CPF inválido. Use o formato XXX.XXX.XXX-XX.">
+                        <f:validateRegex pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$" />
+                    </h:inputText>
+                    <h:message for="cpf" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Telefone: " for="telefone" p:class="form-label" />
-                <h:inputText id="telefone" p:placeholder="XX XXXXX-XXXX" p:class="form-input"
-                    value="#{propietarioBean.propietario.telefone}" />
+                <h:outputLabel value="Email: *" for="email" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="email" p:class="form-input" value="#{propietarioBean.propietario.email}"
+                        required="true" requiredMessage="Email é obrigatório."
+                        validatorMessage="Email inválido. Use o formato exemplo@dominio.com.">
+                        <f:validateRegex pattern="^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" />
+                    </h:inputText>
+                    <h:message for="email" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="CEP: " for="cep" p:class="form-label" />
-                <h:inputText id="cep" p:placeholder="XXXXX-XXX" p:class="form-input"
-                    value="#{propietarioBean.propietario.endereco.cep}" />
+                <h:outputLabel value="Telefone: *" for="telefone" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="telefone" p:placeholder="(XX) XXXXX-XXXX" p:class="form-input"
+                        value="#{propietarioBean.propietario.telefone}" required="true"
+                        requiredMessage="Telefone é obrigatório."
+                        validatorMessage="Telefone inválido. Use o formato (XX) XXXXX-XXXX.">
+                        <f:validateRegex pattern="^\(\d{2}\) \d{5}-\d{4}$" />
+                    </h:inputText>
+                    <h:message for="telefone" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Estado: " for="estado" p:class="form-label" />
-                <h:inputText id="estado" p:class="form-input" value="#{propietarioBean.propietario.endereco.estado}" />
+                <h:outputLabel value="CEP: *" for="cep" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="cep" p:placeholder="XXXXX-XXX" p:class="form-input"
+                        value="#{propietarioBean.propietario.endereco.cep}" required="true"
+                        requiredMessage="CEP é obrigatório." validatorMessage="CEP inválido. Use o formato XXXXX-XXX.">
+                        <f:validateRegex pattern="^\d{5}-\d{3}$" />
+                    </h:inputText>
+                    <h:message for="cep" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Cidade: " for="cidade" p:class="form-label" />
-                <h:inputText id="cidade" p:class="form-input" value="#{propietarioBean.propietario.endereco.cidade}" />
+                <h:outputLabel value="Estado: *" for="estado" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="estado" p:class="form-input" value="#{propietarioBean.propietario.endereco.estado}"
+                        required="true" requiredMessage="Estado é obrigatório." />
+                    <h:message for="estado" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Bairro: " for="bairro" p:class="form-label" />
-                <h:inputText id="bairro" p:class="form-input" value="#{propietarioBean.propietario.endereco.bairro}" />
+                <h:outputLabel value="Cidade: *" for="cidade" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="cidade" p:class="form-input" value="#{propietarioBean.propietario.endereco.cidade}"
+                        required="true" requiredMessage="Cidade é obrigatória." />
+                    <h:message for="cidade" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Logradouro: " for="logradouro" p:class="form-label" />
-                <h:inputText id="logradouro" p:class="form-input"
-                    value="#{propietarioBean.propietario.endereco.logradouro}" />
+                <h:outputLabel value="Bairro: *" for="bairro" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="bairro" p:class="form-input" value="#{propietarioBean.propietario.endereco.bairro}"
+                        required="true" requiredMessage="Bairro é obrigatório." />
+                    <h:message for="bairro" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Número: " for="numero" p:class="form-label" />
-                <h:inputText id="numero" p:type="number" p:class="form-input"
-                    value="#{propietarioBean.propietario.endereco.numero}" />
+                <h:outputLabel value="Logradouro: *" for="logradouro" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="logradouro" p:class="form-input"
+                        value="#{propietarioBean.propietario.endereco.logradouro}" required="true"
+                        requiredMessage="Logradouro é obrigatório." />
+                    <h:message for="logradouro" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="Complemento: " for="complemento" p:class="form-label" />
-                <h:inputText id="complemento" p:class="form-input"
-                    value="#{propietarioBean.propietario.endereco.complemento}" />
+                <h:outputLabel value="Número: *" for="numero" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="numero" p:type="number" p:class="form-input"
+                        value="#{propietarioBean.propietario.endereco.numero}" required="true"
+                        requiredMessage="Número é obrigatório." converterMessage="Número deve ser um valor inteiro." />
+                    <h:message for="numero" styleClass="field-error" />
+                </h:panelGroup>
+
+                <h:outputLabel value="Complemento:" for="complemento" p:class="form-label" />
+                <h:panelGroup>
+                    <h:inputText id="complemento" p:class="form-input"
+                        value="#{propietarioBean.propietario.endereco.complemento}" />
+                </h:panelGroup>
 
                 <h:outputLabel />
-                <h:commandButton value="Salvar" p:class="form-button" action="#{propietarioBean.salvar}" process="@this"/>
+                <h:commandButton value="Salvar" p:class="form-button" action="#{propietarioBean.salvar}"
+                    process="@this" />
             </h:panelGrid>
+
             <hr />
             <p style="text-align: start; margin-top: 20px;">
-                Já tem uma conta? <a style="color:#45a049; text-decoration: none;" href="Login.xhtml">Faça login</a>
+                Já tem uma conta?
+                <a style="color:#45a049; text-decoration: none;" href="Login.xhtml">Faça login</a>
             </p>
         </fieldset>
     </h:form>

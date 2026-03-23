@@ -6,7 +6,7 @@
 <h:head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestão Casas Cadastro</title>
+    <title>Gestão Casas — Cadastro</title>
 
     <link rel="stylesheet" href="#{request.contextPath}/css/Header.css" />
     <link rel="stylesheet" href="#{request.contextPath}/css/Form.css" />
@@ -40,15 +40,17 @@
         <h:form id="formCasa">
             <p:panel styleClass="form-panel">
                 <f:facet name="header">
-                    <span class="panel-header-title">
-                        ➕ Nova Casa
-                    </span>
+                    <span class="panel-header-title">➕ Nova Casa</span>
                 </f:facet>
 
                 <div class="form-grid">
+
                     <div class="field-group">
-                        <label class="field-label">Tipo</label>
-                        <p:selectOneMenu id="tipo" value="#{cadastroCasaBean.casa.tipo}" styleClass="field-input">
+                        <label class="field-label">
+                            Tipo <span class="required-star">*</span>
+                        </label>
+                        <p:selectOneMenu id="tipo" value="#{cadastroCasaBean.casa.tipo}" styleClass="field-input"
+                            required="true" requiredMessage="Selecione o tipo do imóvel.">
                             <f:selectItem itemLabel="Selecione..." itemValue="" />
                             <f:selectItem itemLabel="Casa" itemValue="Casa" />
                             <f:selectItem itemLabel="Apartamento" itemValue="Apartamento" />
@@ -56,12 +58,20 @@
                             <f:selectItem itemLabel="Sobrado" itemValue="Sobrado" />
                             <f:selectItem itemLabel="Terreno" itemValue="Terreno" />
                         </p:selectOneMenu>
+                        <p:message for="tipo" styleClass="field-msg" display="text" />
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">Área (m²)</label>
+                        <label class="field-label">
+                            Área (m²) <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="area" value="#{cadastroCasaBean.casa.area}" styleClass="field-input"
-                            placeholder="Ex: 120.50" />
+                            placeholder="Ex: 120.50" required="true" requiredMessage="Área é obrigatória."
+                            converterMessage="Área deve ser um número decimal (ex: 120.50)."
+                            validatorMessage="Área deve ser um valor positivo.">
+                            <f:validateDoubleRange minimum="0.01" />
+                        </p:inputText>
+                        <p:message for="area" styleClass="field-msg" display="text" />
                     </div>
 
                     <div class="field-group field-group--full">
@@ -71,48 +81,77 @@
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">CEP</label>
+                        <label class="field-label">
+                            CEP <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="cep" value="#{cadastroCasaBean.casa.endereco.cep}" styleClass="field-input"
-                            placeholder="XXXXX-XXX" />
+                            placeholder="XXXXX-XXX" required="true" requiredMessage="CEP é obrigatório."
+                            validatorMessage="CEP inválido. Use o formato XXXXX-XXX.">
+                            <f:validateRegex pattern="^\d{5}-\d{3}$" />
+                        </p:inputText>
+                        <p:message for="cep" styleClass="field-msg" display="text" />
+                        <span class="field-hint">Formato: XXXXX-XXX</span>
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">Logradouro</label>
+                        <label class="field-label">
+                            Logradouro <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="logradouro" value="#{cadastroCasaBean.casa.endereco.logradouro}"
-                            styleClass="field-input" />
+                            styleClass="field-input" required="true" requiredMessage="Logradouro é obrigatório." />
+                        <p:message for="logradouro" styleClass="field-msg" display="text" />
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">Número</label>
+                        <label class="field-label">
+                            Número <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="numero" value="#{cadastroCasaBean.casa.endereco.numero}"
-                            styleClass="field-input" pt:type="number" />
+                            styleClass="field-input" pt:type="number" required="true"
+                            requiredMessage="Número é obrigatório."
+                            converterMessage="Número deve ser um valor inteiro." />
+                        <p:message for="numero" styleClass="field-msg" display="text" />
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">Bairro</label>
+                        <label class="field-label">
+                            Bairro <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="bairro" value="#{cadastroCasaBean.casa.endereco.bairro}"
-                            styleClass="field-input" />
+                            styleClass="field-input" required="true" requiredMessage="Bairro é obrigatório." />
+                        <p:message for="bairro" styleClass="field-msg" display="text" />
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">Cidade</label>
+                        <label class="field-label">
+                            Cidade <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="cidade" value="#{cadastroCasaBean.casa.endereco.cidade}"
-                            styleClass="field-input" />
+                            styleClass="field-input" required="true" requiredMessage="Cidade é obrigatória." />
+                        <p:message for="cidade" styleClass="field-msg" display="text" />
                     </div>
 
                     <div class="field-group">
-                        <label class="field-label">Estado</label>
+                        <label class="field-label">
+                            Estado (UF) <span class="required-star">*</span>
+                        </label>
                         <p:inputText id="estado" value="#{cadastroCasaBean.casa.endereco.estado}"
-                            styleClass="field-input" />
+                            styleClass="field-input" placeholder="Ex: PR" required="true"
+                            requiredMessage="Estado é obrigatório."
+                            validatorMessage="Informe a sigla do estado (2 letras, ex: PR).">
+                            <f:validateRegex pattern="^[A-Za-z]{2}$" />
+                        </p:inputText>
+                        <p:message for="estado" styleClass="field-msg" display="text" />
+                        <span class="field-hint">Sigla de 2 letras (ex: PR, SP)</span>
                     </div>
 
                 </div>
 
                 <div class="form-actions">
-                    <p:commandButton value="Voltar" icon="pi pi-save" styleClass="btn-secondary"
-                        action="#{cadastroCasaBean.voltar}" />
-                    <p:commandButton value="Salvar" icon="pi pi-save" styleClass="btn-primary"
-                        action="#{cadastroCasaBean.salvar}" process="@form" />
+                    <p:commandButton value="Voltar" icon="pi pi-arrow-left" styleClass="btn-secondary"
+                        action="#{cadastroCasaBean.voltar}" immediate="true" />
+                    <p:commandButton value="Salvar" icon="pi pi-check" styleClass="btn-primary"
+                        action="#{cadastroCasaBean.salvar}" process="@form" update="@form growl" />
                 </div>
             </p:panel>
         </h:form>

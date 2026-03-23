@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/jsf/html https://jakarta.ee/xml/ns/jakartaee/jsf-html.xsd">
@@ -9,22 +9,34 @@
     <title>Login</title>
     <link rel="stylesheet" href="#{request.contextPath}/css/Login.css" />
 </h:head>
-<h:body>
-    <h:form>
 
+<h:body>
+    <h:form id="formLogin">
         <fieldset>
             <legend>Login</legend>
 
-
             <h:panelGrid columns="2">
-                <h:outputLabel value="Nome: " for="nome" p:class="form-label" />
-                <h:inputText id="nome" p:class="form-input" value="#{propietarioBean.propietario.nome}" />
+                <h:outputLabel value="Nome: *" for="nome" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="nome" p:class="form-input" value="#{propietarioBean.propietario.nome}"
+                        required="true" requiredMessage="Nome é obrigatório." />
+                    <h:message for="nome" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:outputLabel value="CPF: " for="cpf" p:class="form-label" />
-                <h:inputText id="cpf" p:placeholder="XXX.XXX.XXX-XX" p:class="form-input" value="#{propietarioBean.propietario.cpf}" />
+                <h:outputLabel value="CPF: *" for="cpf" p:class="form-label" />
+                <h:panelGroup layout="block">
+                    <h:inputText id="cpf" p:placeholder="XXX.XXX.XXX-XX" p:class="form-input"
+                        value="#{propietarioBean.propietario.cpf}" required="true" requiredMessage="CPF é obrigatório."
+                        validatorMessage="CPF inválido. Use o formato XXX.XXX.XXX-XX.">
+                        <f:validateRegex pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$" />
+                    </h:inputText>
+                    <h:message for="cpf" styleClass="field-error" />
+                </h:panelGroup>
 
-                <h:commandButton value="Voltar" p:class="form-button back-button" action="Register.xhtml?faces-redirect=true" />
-                <h:commandButton value="Entrar" p:class="form-button" actionListener="#{propietarioBean.entrar}" action="#{propietarioBean.entrar}"/>
+                <h:commandButton value="Voltar" p:class="form-button back-button"
+                    action="Register.xhtml?faces-redirect=true" immediate="true" />
+                <h:commandButton value="Entrar" p:class="form-button" actionListener="#{propietarioBean.entrar}"
+                    action="#{propietarioBean.entrar}" />
             </h:panelGrid>
         </fieldset>
     </h:form>

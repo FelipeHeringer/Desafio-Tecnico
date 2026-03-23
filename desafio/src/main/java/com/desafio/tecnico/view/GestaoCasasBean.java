@@ -53,7 +53,8 @@ public class GestaoCasasBean implements Serializable {
     
     public void excluir(Casa casaExcluir) {
         try {
-            casaService.excluir(casaExcluir.getId(), propietarioBean.getPropietario().getCpf());
+            String cleanCpf = propietarioBean.getPropietario().getCpf().replaceAll("[^0-9]", "");
+            casaService.excluir(casaExcluir.getId(), cleanCpf);
             carregarCasas();
             addMensagemSucesso("Casa excluída com sucesso");
         } catch (Exception e) {

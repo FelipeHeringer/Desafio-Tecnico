@@ -36,7 +36,9 @@ public class CasaService {
 
     public List<Casa> listarPorPropietario(PropietarioDTO propietarioDTO) {
 
-        Propietario propietario = propietarioService.encontrarPorCpf(propietarioDTO.getCpf());
+        String cleanCpf = propietarioDTO.getCpf().replaceAll("[^0-9]", "");
+
+        Propietario propietario = propietarioService.encontrarPorCpf(cleanCpf);
         return casaRepository.findAllByOwner(propietario.getId());
     }
 
@@ -119,9 +121,12 @@ public class CasaService {
 
         EnderecoDTO enderecoDTO = new EnderecoDTO();
 
+        String cep = casaSelecionada.getEndereco().getCep().getCep();
+        String cepFormatado = cep.substring(0,5) + "-" + cep.substring(5); 
+
         enderecoDTO.setEstado(casaSelecionada.getEndereco().getEstado().getUf());
         enderecoDTO.setCidade(casaSelecionada.getEndereco().getCidade().getNomeCidade());
-        enderecoDTO.setCep(casaSelecionada.getEndereco().getCep().getCep());
+        enderecoDTO.setCep(cepFormatado);
         enderecoDTO.setBairro(casaSelecionada.getEndereco().getBairro());
         enderecoDTO.setLogradouro(casaSelecionada.getEndereco().getLogradouro());
         enderecoDTO.setNumero(String.valueOf(casaSelecionada.getEndereco().getNumero()));

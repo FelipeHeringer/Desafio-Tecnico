@@ -37,7 +37,8 @@ public class CadastroCasaBean implements Serializable {
 
     public String salvar() {
         try {
-            Casa casaSalva = casaService.salvar(casa, propietarioBean.getPropietario().getCpf());
+            String cleanCpf = propietarioBean.getPropietario().getCpf().replaceAll("[^0-9]", "");
+            Casa casaSalva = casaService.salvar(casa, cleanCpf);
             if (casaSalva != null) {
                 return "GestaoCasas.xhtml?faces-redirect=true";
             }

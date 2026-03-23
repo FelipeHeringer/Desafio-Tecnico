@@ -1,65 +1,73 @@
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        fieldset {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 500px;
-            max-width: 90%;
-        }
+fieldset {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    max-width: 90%;
+}
 
-        legend {
-            font-weight: bold;
-            color: #333;
-            font-size: 1.2em;
-        }
+legend {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.2em;
+}
 
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
 
-        .form-input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
 
-        .form-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1em;
-        }
+.form-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+}
 
-        .form-button:hover {
-            background-color: #45a049;
-        }
+.form-button:hover {
+    background-color: #45a049;
+}
 
-        .back-button {
-            background-color: #f44336;
-            width: 100px;
-        }
+.back-button {
+    background-color: #f44336;
+    width: 100px;
+}
 
-        .back-button:hover {
-            background-color: #da190b;
-        }
+.back-button:hover {
+    background-color: #da190b;
+}
+
+.field-error {
+    color: #dc2626;
+    font-size: 0.75rem;
+    display: block;
+    margin-top: -8px;
+    margin-bottom: 6px;
+}
